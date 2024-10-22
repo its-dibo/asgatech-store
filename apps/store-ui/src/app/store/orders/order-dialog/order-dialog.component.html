@@ -1,0 +1,24 @@
+@if (data()) {
+  <ngx-content-card [data]="data()">
+    <div after-content>
+      <app-form
+        [fields]="fields"
+        [model]="model"
+        (submit)="submitOrder($event)"
+      ></app-form>
+
+      @if (model.count > 0 && model.count <= data()!.AvailablePieces) {
+        <mat-divider class="!m-3"></mat-divider>
+
+        <b>total price: </b>
+        ${{ data()!.ProductPrice }} X {{ model.count }} = ${{
+          data()!.ProductPrice * model.count
+        }}
+      }
+
+      @if (message()) {
+        <div [innerHTML]="message()" class="alert-ok mt-5"></div>
+      }
+    </div>
+  </ngx-content-card>
+}

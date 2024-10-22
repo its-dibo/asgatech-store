@@ -1,0 +1,29 @@
+<form
+  *ngIf="fields"
+  [formGroup]="formGroup"
+  method="post"
+  enctype="multipart/form-data"
+>
+  <ng-content select="[header]"></ng-content>
+  <formly-form
+    [form]="formGroup"
+    [fields]="fields | formlyFields"
+    [model]="model"
+    [options]="options"
+  >
+  </formly-form>
+
+  <div id="actions">
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="disabled || !formGroup.valid || formGroup.pristine"
+      (click)="onSubmit()"
+      type="button"
+    >
+      {{ submitButton }}
+    </button>
+    <ng-content select="[actions]"></ng-content>
+  </div>
+  <ng-content select="[footer]"></ng-content>
+</form>

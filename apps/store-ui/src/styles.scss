@@ -1,0 +1,181 @@
+@layer base, libs, global,  final, overrides;
+@layer base {
+  @tailwind base;
+}
+
+// primeNg
+@import "primeng/resources/themes/lara-light-blue/theme.css" layer(libs);
+@import "primeng/resources/primeng.css" layer(libs);
+
+// material
+@import "@angular/material/prebuilt-themes/indigo-pink.css" layer(libs);
+
+// quill
+@import "quill/dist/quill.core.css" layer(libs);
+@import "quill/dist/quill.bubble.css" layer(libs);
+@import "quill/dist/quill.snow.css" layer(libs);
+
+@layer final {
+  @tailwind components;
+  @tailwind utilities;
+}
+
+@layer overrides {
+}
+
+@layer global {
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Baloo Bhaijaan 2", "system-ui", Roboto, sans-serif;
+    font-size: large;
+  }
+
+  * {
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
+  img {
+    vertical-align: middle;
+  }
+
+  // the page container, i.e: below the header(toolbar) and above the footer
+  .page {
+    padding: 10px;
+  }
+
+  a,
+  a:visited,
+  a:hover {
+    color: #1976d2;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #125699;
+  }
+
+  a {
+    font-weight: 700;
+  }
+
+  /* bootstrap-like alerts */
+  .alert {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    text-align: center;
+
+    // todo: add a close button
+    .dismiss {
+    }
+  }
+
+  .alert-ok {
+    @extend .alert;
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #155724;
+  }
+
+  .alert-error {
+    // use @extend so you don't have to add .alert to class list
+    // <div class="alert alert-ok">  ->  <div class="alert-ok">
+    @extend .alert;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #721c24;
+  }
+
+  .alert-warn {
+    @extend .alert;
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #8a6d3b;
+  }
+
+  formly-field {
+    display: block;
+    margin-bottom: 10px;
+
+    mat-hint {
+      color: gray;
+      font-style: italic;
+    }
+  }
+
+  // todo: make .masonry generated horizontally
+  // rename this to .masonry-vertical
+  .masonry {
+    column-count: 1;
+    column-gap: 1em;
+
+    .masonry-item,
+    ngx-content-card {
+      display: inline-block;
+      margin: 0 0 1em;
+      width: 100%;
+    }
+
+    @media (min-width: 900px) {
+      column-count: 2;
+    }
+
+    @media (min-width: 1500px) {
+      column-count: 3;
+    }
+  }
+
+  // add a spinner loader to formly fields
+  .formly-loader {
+    formly-field-mat-select::after {
+      content: "";
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #3498db;
+      border-radius: 50%;
+      width: 15px;
+      height: 15px;
+      animation: spin 2s linear infinite;
+      position: absolute;
+      top: 5px;
+      right: 20px;
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  // make dialog scrollable in small screens
+  .cdk-overlay-pane {
+    overflow: auto;
+  }
+
+  button:not(.button-square) {
+    // todo: issue: why material design styles (imported in libs layer) overrides styles in global layer?
+    border-radius: 20px !important;
+  }
+
+  mat-dialog-container {
+    max-width: fit-content;
+    margin: auto;
+  }
+
+  quill-editor {
+    display: block !important;
+  }
+}
+
+// ------- don't add any code under this line. add global codes inside the global layer ------ //

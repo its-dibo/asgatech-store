@@ -1,0 +1,18 @@
+<div id="container">
+  <app-alert [alert]="alert"></app-alert>
+
+  @if (fields) {
+    <h1 [innerHTML]="data?.title || 'Login to your account'"></h1>
+
+    <!-- todo: add forget password link and remember checkbox -->
+    <app-form
+      [fields]="fields"
+      [disabled]="loading"
+      (submit)="onSubmit($event)"
+      submitButton="Login"
+    >
+    </app-form>
+  }
+
+  <mat-spinner *ngIf="loading" strokeWidth="10" diameter="100"></mat-spinner>
+</div>

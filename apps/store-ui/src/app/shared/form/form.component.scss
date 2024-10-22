@@ -1,0 +1,12 @@
+::ng-deep formly-field {
+  label,
+  small,
+  .p-component {
+    width: 100%;
+  }
+
+  small {
+    color: gray;
+    font-style: italic;
+  }
+}

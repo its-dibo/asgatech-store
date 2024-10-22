@@ -1,0 +1,7 @@
+@if (alert?.message) {
+  <div
+    [class]="'alert-' + alert!.status || ''"
+    [ngClass]="{ big: alert!.big }"
+    [innerHTML]="alert!.message"
+  ></div>
+}

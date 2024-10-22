@@ -1,0 +1,48 @@
+<div id="header">
+  <div>
+    <h1 *ngIf="title" [innerHTML]="title"></h1>
+    <h3 *ngIf="subtitle" [innerHTML]="subtitle"></h3>
+
+    <ng-content select="[title]"></ng-content>
+    <ng-content select="[subtitle]"></ng-content>
+  </div>
+  @for (button of buttons; track button.text) {
+    @if (button.cond !== false) {
+      <button
+        mat-raised-button
+        [color]="button.color || 'primary'"
+        [routerLink]="button.link"
+        [matTooltip]="button.tooltip || button.text || button.link"
+      >
+        <mat-icon *ngIf="button.icon">{{ button.icon }}</mat-icon>
+        {{ button.text }}
+      </button>
+    }
+  }
+</div>
+
+<app-alert [alert]="alert"></app-alert>
+
+<ng-content></ng-content>
+
+@if (loading) {
+  <mat-spinner
+    [strokeWidth]="spinnerWidth"
+    [diameter]="spinnerDiameter"
+  ></mat-spinner>
+}
+
+<div id="floating-group">
+  @for (button of floatButtons; track button.link) {
+    @if (button.cond !== false) {
+      <button
+        mat-mini-fab
+        [color]="button.color || 'primary'"
+        [routerLink]="button.link"
+        [matTooltip]="button.tooltip || button.text || button.link"
+      >
+        <mat-icon>{{ button.icon }}</mat-icon> {{ button.text }}
+      </button>
+    }
+  }
+</div>

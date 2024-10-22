@@ -1,0 +1,29 @@
+@let orders = ordersService.getOrders();
+
+<h1><mat-icon>shopping_cart</mat-icon> Orders details</h1>
+
+@if (orders.length > 0) {
+  <mat-list>
+    @for (item of orders; track item) {
+      <mat-list-item>
+        <mat-icon matListItemIcon>shopping_bag</mat-icon>
+        <span matListItemTitle>{{ item.product.ProductName }}</span>
+        <span matListItemLine
+          >{{ item.product.ProductPrice }} X {{ item.count }} =
+          {{ item.product.ProductPrice * item.count }}</span
+        >
+      </mat-list-item>
+
+      <mat-divider class="m-5"></mat-divider>
+    }
+  </mat-list>
+
+  <mat-icon class="align-middle">payments</mat-icon>
+
+  <b>Total:</b> ${{ ordersService.getTotalPrice() }}
+} @else {
+  <div class="alert-warn">
+    Your shopping cart is still empty <br />
+    <a routerLink="/">Check out all products here</a>
+  </div>
+}

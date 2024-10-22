@@ -1,0 +1,17 @@
+<ngx-content-card [data]="data">
+  <ng-container before-content>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon matListItemIcon>phone_iphone</mat-icon>
+        <span matListItemTitle>mobile</span>
+        <span matListItemLine>{{ data.mobile }}</span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon matListItemIcon>mail</mat-icon>
+        <span matListItemTitle>email</span>
+        <span matListItemLine>{{ data.email }}</span>
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+</ngx-content-card>

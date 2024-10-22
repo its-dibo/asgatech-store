@@ -1,0 +1,54 @@
+<app-page
+  [alert]="alert()"
+  [loading]="isLoading()"
+  [meta]="meta()"
+  [floatButtons]="[
+    {
+      icon: 'add',
+      link: '/add',
+      tooltip: 'add a new product',
+    },
+  ]"
+>
+  <div class="masonry">
+    @for (item of data$ | async; track item.ProductId) {
+      <ngx-content-card [data]="item">
+        <div header-actions>${{ item.ProductPrice }}</div>
+        <div after-content>
+          <mat-list>
+            <mat-list-item>
+              <mat-icon matListItemIcon>sell</mat-icon>
+              <span matListItemTitle>price</span>
+              <span matListItemLine>{{ item.ProductPrice }}</span>
+            </mat-list-item>
+
+            <mat-list-item>
+              <mat-icon matListItemIcon>inventory</mat-icon>
+              <span matListItemTitle>in stock</span>
+              <span matListItemLine>{{ item.AvailablePieces }}</span>
+            </mat-list-item>
+          </mat-list>
+
+          @if (item.AvailablePieces === 0) {
+            <div>
+              <mat-icon>sentiment_dissatisfied</mat-icon> not available in the
+              store
+            </div>
+          } @else {
+            <div class="flex justify-between">
+              <button mat-raised-button color="primary" (click)="order(item)">
+                <mat-icon>add_shopping_cart</mat-icon> order now
+              </button>
+              <a [routerLink]="">more details...</a>
+            </div>
+          }
+        </div>
+      </ngx-content-card>
+    } @empty {
+      <div id="empty">
+        <mat-icon>sentiment_dissatisfied</mat-icon> No product available in the
+        store right now!
+      </div>
+    }
+  </div>
+</app-page>

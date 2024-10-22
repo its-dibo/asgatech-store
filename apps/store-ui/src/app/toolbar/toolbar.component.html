@@ -1,0 +1,40 @@
+<mat-toolbar color="primary">
+  <a routerLink="/" id="site-logo">
+    @if (toolbarConfig.logo.type === "icon") {
+      <mat-icon class="align-baseline">{{ toolbarConfig.logo.value }}</mat-icon>
+    } @else if (toolbarConfig.logo.type === "image") {
+      <img
+        src="{{ toolbarConfig.logo.value }}"
+        alt="logo"
+        width="50px"
+        height="50px"
+      />
+    }
+
+    <span matTooltip="{{ meta.description }}">{{ meta.name }}</span>
+  </a>
+
+  <div class="flex">
+    <div class="mr-5">
+      <a routerLink="/orders">
+        <mat-icon class="align-middle">request_quote</mat-icon>
+        ${{ ordersService.getTotalPrice() }}
+      </a>
+    </div>
+
+    @if (user?.id) {
+      <div id="user-info">
+        <a
+          *ngIf="user?.firstName && user?.id"
+          routerLink="/users/{{ user?.id }}"
+          >{{ user?.firstName }}</a
+        >
+        <button mat-raised-button color="accent" (click)="logout()">
+          LogOut
+        </button>
+      </div>
+    } @else {
+      <button mat-raised-button color="accent" (click)="login()">Login</button>
+    }
+  </div>
+</mat-toolbar>

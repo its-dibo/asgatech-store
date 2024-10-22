@@ -1,0 +1,10 @@
+{
+  "verbose": true,
+  "watch": ["src", ".env", ".env.*", "server.ts"],
+  "ext": "*",
+  "ignore": ["**/*.{spec,test}.{t,j}s", "**/e2e"],
+  "exec": "npm run build:dev && npm run serve",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

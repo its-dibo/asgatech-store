@@ -1,0 +1,15 @@
+#header {
+  display: flex;
+  justify-content: space-between;
+}
+
+#floating-group {
+  z-index: 100;
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+
+  button {
+    margin: 5px;
+  }
+}
