@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "types": ["jest"]
+  },
+  "include": ["**/*.spec.ts"],
+  // override exclude because .spec.ts files are listed there
+  "exclude": [""]
+}

@@ -1,0 +1,109 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "jsx": "preserve",
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["esnext", "dom", "dom.iterable"],
+    "types": ["node"],
+    "typeRoots": ["node_modules/@types", "**/@types"],
+    "removeComments": true,
+    "noEmit": false,
+    "noEmitOnError": false,
+    "noImplicitAny": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveSymlinks": true,
+    "sourceRoot": "",
+    "mapRoot": "",
+    "emitDecoratorMetadata": true,
+    // available in CLI options only
+    // "locale": "en",
+    // "watch": false,
+    "resolveJsonModule": true,
+    "paths": {
+      "@engineers/*": ["./packages/*"],
+      "~~*": ["./*"]
+      /* causes `ERR_REQUIRE_ESM` error 
+      https://stackoverflow.com/questions/69351138/tsconfig-causes-err-require-esm-must-use-import-to-load-es-module
+       "*": ["node_modules/*", "types/*"]
+        */
+    },
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    // required for ts-jest
+    "allowJs": true,
+    /* todo: enable this option https://stackoverflow.com/a/50241920/12577650 */
+    "strictPropertyInitialization": false,
+    // fixes ngcc failed to run on ngx-sharebuttons
+    // https://github.com/MurhafSousli/ngx-sharebuttons/issues/474#issuecomment-715603754
+    "skipLibCheck": true,
+    // suppress: Element implicitly has an 'any' type because index expression is not of type ..
+    // https://stackoverflow.com/a/56488600/12577650
+    // deprecated in v5
+    // https://github.com/microsoft/TypeScript/issues/51909
+    // "suppressImplicitAnyIndexErrors": true
+
+    // forbid non-module files, i.e. files that doesn't have import/export
+    // this is good for transpilers that operate on a single .ts file at a time, such as babel
+    // because the file doesn't rely on other files
+    "isolatedModules": true,
+    // save information about the project graph from the last compilation
+    // for Faster subsequent builds
+    // to rebuild from scratch remove the file "tsconfig.tsbuildinfo" before building
+    "incremental": true,
+    "plugins": [
+      // for Nextjs apps
+      { "name": "next" }
+    ]
+  },
+  "exclude": [
+    "**/node_modules",
+    "**/dist",
+    "**/*.spec.ts",
+    "**/e2e",
+    "**/test.ts",
+    "**/src/**/templates"
+  ],
+  "angularCompilerOptions": {
+    "enableIvy": true,
+    "strictTemplates": true,
+    /* override some of 'strictTemplates' strictness */
+    /* todo: enable, it causes error in angular components (html files) ex: <span dir="auto"> */
+    "strictAttributeTypes": false,
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true
+  },
+  // tsconfig for `ts-node` only.
+  "ts-node": {
+    "compilerOptions": {
+      "sourceMap": false
+    },
+    // same as `ts-node --esm`
+    "esm": true,
+    // enable ts-node to use tsconfig.compilerOptions.path in runtime
+    // install tsconfig-paths
+    // equivalent to `ts-node -r tsconfig-paths/register`
+    "require": ["tsconfig-paths/register"],
+    "transpileOnly": true,
+    "moduleTypes": {
+      // compile `webpack.config.ts` as commonjs
+      "**/webpack.config.ts": "cjs",
+      "**/webpack.config.*.ts": "cjs",
+      "**/jest.config.ts": "cjs"
+    }
+  }
+}
