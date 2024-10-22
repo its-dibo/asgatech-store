@@ -1,0 +1,155 @@
+@if (data) {
+  <mat-card [ngxAttributes]="attributes" [ngClass]="{ invalid: invalid }">
+    <mat-card-header>
+      <img
+        *ngIf="data.author?.image"
+        mat-card-avatar
+        src="{{ data.author!.image }}"
+        alt="{{ data.author!.name }}"
+      />
+      <mat-card-title-group>
+        @if (data.title) {
+          <mat-card-title dir="auto">
+            @if (data.link) {
+              <a [routerLink]="data.link">
+                <ng-container *ngTemplateOutlet="title"></ng-container>
+              </a>
+            } @else {
+              <ng-container *ngTemplateOutlet="title"></ng-container>
+            }
+          </mat-card-title>
+        }
+
+        <mat-card-subtitle dir="auto">
+          <div [innerHTML]="data.subtitle"></div>
+          <div [ngClass]="data.title ? 'info' : 'info-vertical'">
+            <span *ngIf="data.author" id="author">
+              <a *ngIf="data.author.link" routerLink="{{ data.author.link }}">{{
+                data.author.name
+              }}</a>
+              <span *ngIf="!data.author.link">{{ data.author.name }}</span>
+            </span>
+            <!--todo: a pipe to convert timestamp or Date to string -->
+            @if (!data.title && data.link) {
+              <span id="time"
+                ><a routerLink="{{ data.link }}">{{
+                  data.createdAt || data.updatedAt
+                }}</a></span
+              >
+            } @else {
+              <span id="time">{{ data.createdAt || data.updatedAt }}</span>
+            }
+          </div>
+        </mat-card-subtitle>
+      </mat-card-title-group>
+
+      <ng-content select="[header-actions]"></ng-content>
+    </mat-card-header>
+
+    <!--
+        notes:
+        - use attr.width instead of width to remove this attribute if data.cover.width
+        has no value (i.e: null)
+        https://stackoverflow.com/a/62048326/12577650
+    -->
+    <mat-card-content [dir]="options.contentDirection || 'auto'">
+      <!-- todo:
+            - <img  [debug]="opts.dev"
+            [errorImage]="siteLogo or placeholder?text=siteName"
+            [scrollTarget]="$cdk-virtual-scroll-viewport"
+            (onStateChange)="onStateChange($event)" />
+            - if(!data.cover.lazy) remove attribute lazyLoad
+            - ng-lazyload-image hooks
+        -->
+
+      <img
+        *ngIf="data.cover"
+        mat-card-image
+        [attr.width]="data.cover.width"
+        [attr.height]="data.cover.height"
+        [src]="data.cover.src"
+        [data-src]="data.cover.src"
+        [data-srcset]="data.cover.srcset"
+        [sizes]="data.cover.sizes"
+        [alt]="data.cover.alt || data.title || ''"
+      />
+
+      <!--
+            in item mode, use <quill-view> to render the content that was generated via <quill-editor>
+            https://www.npmjs.com/package/ngx-quill#quillviewcomponent---using-quilljs-to-render-content
+            todo:
+            if(quillView)use <quill-view>
+            else use <div *ngIf="type=='list'" class="content" [innerHtml]="data.content"></div>
+        -->
+
+      <ng-content select="[before-content]"></ng-content>
+
+      <quill-view-html
+        *ngIf="data.content"
+        #quillView
+        [content]="data.content | hypernate: { target: '_blank' }"
+        theme="snow"
+      ></quill-view-html>
+
+      <ng-content select="[after-content]"></ng-content>
+    </mat-card-content>
+    <mat-card-actions>
+      <ng-content select="[actions]"></ng-content>
+    </mat-card-actions>
+
+    <!-- todo: add <mat-divider> if the footer is not empty -->
+    <mat-card-footer>
+      <ng-content select="[footer-start]"></ng-content>
+
+      @if (data.keywords) {
+        <mat-chip-set aria-label="keywords">
+          @for (item of data.keywords; track item.text) {
+            <mat-chip matBadge="{{ item.count }}" matBadgeOverlap="true">
+              @if (item.link) {
+                <a routerLink="{{ item.link }}" target="{{ item.target }}">{{
+                  item.text
+                }}</a>
+              } @else {
+                <span>{{ item.text }}</span>
+              }
+            </mat-chip>
+          }
+        </mat-chip-set>
+      }
+
+      <ng-content select="[footer-end]"></ng-content>
+    </mat-card-footer>
+  </mat-card>
+} @else {
+  <mat-spinner
+    strokeWidth="10"
+    diameter="200"
+    style="margin: auto"
+  ></mat-spinner>
+}
+
+<ng-template #title>
+  <!--todo: dynamic element (html tag) ex: <{{opts.titleTag || 'h1'}}> -->
+  @if (options.titleTag === "h1" || !options.titleTag) {
+    <h1 (click)="titleClick.emit()">
+      {{ data!.title! | length: options.titleMaxLength }}
+    </h1>
+  } @else if (options.titleTag === "h2") {
+    <h2 (click)="titleClick.emit()">
+      {{ data!.title! | length: options.titleMaxLength }}
+    </h2>
+  } @else if (options.titleTag === "h3") {
+    <h3 (click)="titleClick.emit()">
+      {{ data!.title! | length: options.titleMaxLength }}
+    </h3>
+  }
+</ng-template>
+
+<!-- <mat-card-actions>
+    <button mat-flat-button color="primary">
+    <mat-icon>like</mat-icon> Like
+    </button>
+    <button mat-flat-button color="accent">
+    <mat-icon>share</mat-icon> SHARE
+    </button>
+    </mat-card-actions> -->

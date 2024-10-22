@@ -1,0 +1,13 @@
+#container {
+  padding: 20px;
+}
+
+:host {
+  border-radius: 20px;
+}
+
+#title {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

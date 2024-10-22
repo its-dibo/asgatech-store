@@ -1,0 +1,27 @@
+{
+  "name": "@engineers/rxjs",
+  "version": "1.0.0",
+  "type": "module",
+  "private": false,
+  "description": "rxjs utils",
+  "dependencies": {
+    "rxjs": "^7.8.1"
+  },
+  "keywords": [
+    "rxjs"
+  ],
+  "scripts": {
+    "build": "tsk build",
+    "prepublishOnly": "npm run build",
+    "prerelease": "shx mkdir -p dist && shx cp package.json dist",
+    "prerelease:local": "npm run prerelease",
+    "release": "semantic-release",
+    "release:local": "semantic-release --no-ci",
+    "postrelease": "shx rm -fr dist && shx rm -fr tarball!!",
+    "postrelease:local": "npm run postrelease",
+    "_publish": "cd dist && npm publish --access=public",
+    "pre_publish": "npm run prepublishOnly",
+    "_pack": "npm run prepublishOnly && npm pack --prefix=dist ./dist",
+    "postversion": "shx cp package.json .."
+  }
+}

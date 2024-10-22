@@ -1,0 +1,34 @@
+{
+  "name": "@engineers/ngx-formly-mat",
+  "version": "0.0.1",
+  "type": "module",
+  "private": false,
+  "description": "material design components for formly fields",
+  "scripts": {
+    "build": "tsk build",
+    "prepublishOnly": "npm run build",
+    "prerelease": "shx mkdir -p dist && shx cp package.json dist",
+    "prerelease:local": "npm run prerelease",
+    "release": "semantic-release",
+    "release:local": "semantic-release --no-ci",
+    "postrelease": "shx rm -fr dist && shx rm -fr tarball!!",
+    "postrelease:local": "npm run postrelease",
+    "_publish": "cd dist && npm publish --access=public",
+    "pre_publish": "npm run prepublishOnly",
+    "_pack": "npm run prepublishOnly && npm pack --prefix=dist ./dist"
+  },
+  "dependencies": {
+    "@angular/cdk": "18.1.2",
+    "@angular/common": "18.1.2",
+    "@angular/core": "18.1.2",
+    "@angular/forms": "18.1.2",
+    "@angular/material": "18.1.2",
+    "@angular/material-luxon-adapter": "18.1.2",
+    "@ngx-formly/core": "^6.3.6",
+    "@ngx-formly/material": "^6.3.6",
+    "ngx-quill": "^26.0.8",
+    "quill": "2.0.2",
+    "rxjs": "^7.8.1",
+    "tslib": "^2.6.3"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "name": "@engineers/ngx-cards-mat",
+  "version": "1.3.0",
+  "type": "module",
+  "private": false,
+  "description": "renders an object into a content using `material design`, built on top of `ngx-content-core`",
+  "keywords": [
+    "angular",
+    "cms",
+    "content management system",
+    "ngx",
+    "material design"
+  ],
+  "dependencies": {
+    "@fortawesome/angular-fontawesome": "^0.15.0",
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-brands-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "lodash.template": "^4.5.0",
+    "ngx-highlightjs": "^12.0.0",
+    "ngx-infinite-scroll": "^18.0.0",
+    "ngx-quill": "^26.0.8",
+    "rxjs": "^7.8.1",
+    "tslib": "^2.6.3"
+  },
+  "peerDependencies": {
+    "@angular/cdk": ">=14.0.0",
+    "@angular/common": ">=14.0.0",
+    "@angular/core": ">=14.0.0",
+    "@angular/material": ">=14.0.0",
+    "@angular/router": ">=14.0.0"
+  },
+  "scripts": {
+    "build": "tsk build",
+    "prepublishOnly": "npm run build",
+    "prerelease": "shx mkdir -p dist && shx cp package.json dist",
+    "prerelease:local": "npm run prerelease",
+    "release": "semantic-release",
+    "release:local": "semantic-release --no-ci",
+    "postrelease": "shx rm -fr dist && shx rm -fr tarball!!",
+    "postrelease:local": "npm run postrelease",
+    "_publish": "cd dist && npm publish --access=public",
+    "pre_publish": "npm run prepublishOnly",
+    "_pack": "npm run prepublishOnly && npm pack --prefix=dist ./dist",
+    "postversion": "shx cp package.json .."
+  },
+  "entries": "packages/ngx-content-view-mat",
+  "devDependencies": {
+    "@types/lodash.template": "^4.5.3",
+    "ng-packagr": "^18.2.1"
+  }
+}

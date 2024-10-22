@@ -1,0 +1,77 @@
+<!-- 
+  todo: use <mat-form-field>
+  <mat-form-field> requires `matInput` which is not supported for `type=file`
+  also, replace <small> with <mat-hint>, requires <mat-form-field>
+
+  crete a custom form field
+  https://material.angular.io/guide/creating-a-custom-form-field-control
+
+  -->
+
+<input
+  type="file"
+  #fileInput
+  style="display: none"
+  [formControl]="formControl"
+  [formlyAttributes]="field"
+  [name]="props.name"
+  [multiple]="props.multiple"
+  [accept]="props.accept"
+  [attr.capture]="props.capture"
+  (change)="props.onFilesAdded?.() || onFilesAdded()"
+/>
+<button
+  type="button"
+  mat-raised-button
+  [color]="props.color"
+  (click)="props.addFiles?.() || addFiles()"
+>
+  {{ props.label || " Add Files" }}
+</button>
+<br />
+
+<!--
+    todo: show files with progress,
+    if every file processed separately put a progress bar to each file in the files list
+-->
+<mat-progress-bar
+  *ngIf="props.progress"
+  mode="determinate"
+  [value]="props.progress"
+></mat-progress-bar>
+
+<mat-list>
+  @for (file of files; track file) {
+    <mat-list-item>
+      <p mat-line>
+        {{ file.name }}
+        <span
+          (click)="remove(file)"
+          style="cursor: pointer"
+          title="remove this file"
+        >
+          <mat-icon>delete_forever</mat-icon>
+        </span>
+      </p>
+    </mat-list-item>
+  }
+</mat-list>
+
+<mat-list *ngIf="props.existsFiles">
+  <mat-list-item *ngFor="let file of props.existsFiles">
+    <a href="{{ file.link }}">
+      <div *ngIf="file.link">
+        <img *ngIf="file.src" src="{{ file.src }}" />
+      </div>
+      <p mat-line *ngIf="!file.src">{{ file.name }}</p>
+    </a>
+  </mat-list-item>
+</mat-list>
+
+@if (props.icon) {
+  <mat-icon matSuffix>{{ props.icon }}</mat-icon>
+}
+
+@if (props.description) {
+  <small [innerHTML]="props.description"></small>
+}

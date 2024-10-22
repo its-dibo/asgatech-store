@@ -1,0 +1,43 @@
+{
+  "name": "@engineers/ngx-utils",
+  "version": "1.2.0",
+  "type": "module",
+  "private": false,
+  "description": "tools for Angular",
+  "dependencies": {
+    "@angular/material": "18.1.2",
+    "rxjs": "^7.8.1",
+    "tslib": "^2.6.3"
+  },
+  "devDependencies": {
+    "@angular/platform-browser-dynamic": "18.1.2",
+    "jest-preset-angular": "^14.2.2",
+    "ng-packagr": "^18.2.1"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=14.0.0",
+    "@angular/core": ">=14.0.0",
+    "@angular/platform-browser": ">=14.0.0",
+    "@angular/router": ">=14.0.0"
+  },
+  "keywords": [
+    "angular",
+    "ngx",
+    "front end"
+  ],
+  "scripts": {
+    "build": "tsk build",
+    "build:dev": "ng build ngx-utils --configuration=development",
+    "prepublishOnly": "npm run build",
+    "prerelease": "shx mkdir -p dist && shx cp package.json dist",
+    "prerelease:local": "npm run prerelease",
+    "release": "semantic-release",
+    "release:local": "semantic-release --no-ci",
+    "postrelease": "shx rm -fr dist && shx rm -fr tarball!!",
+    "postrelease:local": "npm run postrelease",
+    "_publish": "cd dist && npm publish --access=public",
+    "pre_publish": "npm run prepublishOnly",
+    "_pack": "npm run prepublishOnly && npm pack --prefix=dist ./dist",
+    "postversion": "shx cp package.json .."
+  }
+}

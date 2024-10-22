@@ -1,0 +1,29 @@
+<div id="container">
+  <div mat-dialog-title id="title">
+    <div *ngIf="data.title" [innerHTML]="data.title"></div>
+    <button
+      mat-mini-fab
+      color="{{ data.closeButtonColor || 'primary' }}"
+      mat-dialog-close
+      *ngIf="!data?.hideCloseButton"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- 
+    todo: receive events from the hosted component and pass it to the host component 
+    i.e. the component that opened the dialog 
+  -->
+  <ng-container
+    mat-dialog-content
+    *ngComponentOutlet="data.component; inputs: data.inputs"
+  ></ng-container>
+  <div [innerHTML]="data.content" *ngIf="data.content"></div>
+
+  <mat-spinner
+    *ngIf="!data.content && !data.component"
+    strokeWidth="10"
+    diameter="100"
+  ></mat-spinner>
+</div>

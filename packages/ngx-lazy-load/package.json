@@ -1,0 +1,28 @@
+{
+  "name": "@engineers/ngx-lazy-load",
+  "version": "0.0.1",
+  "type": "module",
+  "private": false,
+  "description": "lazy load images or any element has 'srs' or 'srcset' attribute",
+  "peerDependencies": {
+    "@angular/common": ">=14.0.0",
+    "@angular/core": ">=14.0.0"
+  },
+  "scripts": {
+    "build": "tsk build",
+    "prepublishOnly": "npm run build",
+    "prerelease": "shx mkdir -p dist && shx cp package.json dist",
+    "prerelease:local": "npm run prerelease",
+    "release": "semantic-release",
+    "release:local": "semantic-release --no-ci",
+    "postrelease": "shx rm -fr dist && shx rm -fr tarball!!",
+    "postrelease:local": "npm run postrelease",
+    "_publish": "cd dist && npm publish --access=public",
+    "pre_publish": "npm run prepublishOnly",
+    "_pack": "npm run prepublishOnly && npm pack --prefix=dist ./dist",
+    "postversion": "shx cp package.json .."
+  },
+  "dependencies": {
+    "tslib": "^2.6.3"
+  }
+}

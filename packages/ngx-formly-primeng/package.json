@@ -1,0 +1,30 @@
+{
+  "name": "@engineers/ngx-formly-primeng",
+  "version": "0.0.1",
+  "type": "module",
+  "private": false,
+  "description": "PrimeNg components for formly fields",
+  "scripts": {
+    "build": "tsk build",
+    "prepublishOnly": "npm run build",
+    "prerelease": "shx mkdir -p dist && shx cp package.json dist",
+    "prerelease:local": "npm run prerelease",
+    "release": "semantic-release",
+    "release:local": "semantic-release --no-ci",
+    "postrelease": "shx rm -fr dist && shx rm -fr tarball!!",
+    "postrelease:local": "npm run postrelease",
+    "_publish": "cd dist && npm publish --access=public",
+    "pre_publish": "npm run prepublishOnly",
+    "_pack": "npm run prepublishOnly && npm pack --prefix=dist ./dist"
+  },
+  "dependencies": {
+    "@angular/common": "18.1.2",
+    "@angular/core": "18.1.2",
+    "@angular/forms": "18.1.2",
+    "@ngx-formly/core": "^6.3.6",
+    "@ngx-formly/primeng": "^6.3.6",
+    "primeng": "^17.18.9",
+    "quill": "2.0.2",
+    "tslib": "^2.6.3"
+  }
+}

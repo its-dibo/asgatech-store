@@ -1,0 +1,25 @@
+<label>{{ props.label }}</label>
+
+<p-editor
+  [formControl]="formControl"
+  [formlyAttributes]="field"
+  [style]="props.style"
+  [class]="'p-component ' + props.class"
+  [styleClass]="props.styleClass"
+  [placeholder]="props.placeholder"
+  [formats]="props.formats"
+  [modules]="props.modules"
+  [bounds]="props.bounds"
+  [scrollingContainer]="props.scrollingContainer"
+  [debug]="props.debug"
+  [readonly]="!!props.readonly"
+  (onInit)="(props.onInit)"
+  (onTextChange)="(props.onTextChange)"
+  (onSelectionChange)="(props.onSelectionChange)"
+>
+  <!-- <ng-template pTemplate="header" [innerHTML]="props.header"></ng-template>       -->
+</p-editor>
+
+@if (props.description) {
+  <small [innerHTML]="props.description"></small>
+}

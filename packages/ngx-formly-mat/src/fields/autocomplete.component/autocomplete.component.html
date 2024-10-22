@@ -1,0 +1,31 @@
+<mat-form-field
+  [appearance]="props.appearance"
+  [attr.style]="props.style"
+  [attr.class]="props.class"
+>
+  <mat-label>{{ props.label || field.key }}</mat-label>
+
+  <input
+    #input
+    [formControl]="formControl"
+    [formlyAttributes]="field"
+    matInput
+    [matAutocomplete]="auto"
+    [style]="props.style"
+    [class]="props.class"
+  />
+
+  @if (props.icon) {
+    <mat-icon matSuffix>{{ props.icon }}</mat-icon>
+  }
+
+  @if (props.description) {
+    <mat-hint [innerHTML]="props.description"></mat-hint>
+  }
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete">
+  @for (item of autoCompleteList; track item) {
+    <mat-option [value]="item.value">{{ item.label }}</mat-option>
+  }
+</mat-autocomplete>

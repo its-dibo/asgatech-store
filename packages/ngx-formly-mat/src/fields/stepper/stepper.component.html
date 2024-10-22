@@ -1,0 +1,73 @@
+<mat-horizontal-stepper
+  #formlyStepper
+  [attr.style]="props.style"
+  [attr.class]="props.class"
+>
+  <mat-step
+    *ngFor="let step of field.fieldGroup; let index = index; let last = last"
+    [label]="step.props?.label || ''"
+  >
+    <formly-field
+      [field]="step"
+      [style]="props.style"
+      [class]="props.class"
+    ></formly-field>
+    <div>
+      <div id="action-buttons">
+        @if (props.prevButton !== null) {
+          <button
+            mat-raised-button
+            color="{{ props.prevButton?.color }}"
+            [disabled]="
+              formlyStepper.selectedIndex === 0 || props.prevButton?.disabled
+            "
+            type="button"
+            (click)="move('previous', formlyStepper)"
+          >
+            {{ props.prevButton.name }}
+            <mat-icon>{{ props.prevButton?.icon }}</mat-icon>
+          </button>
+        }
+        @if (props.nextButton !== null) {
+          <button
+            mat-raised-button
+            color="{{ props.nextButton?.color }}"
+            [disabled]="!isValid(step) || last || props.nextButton?.disabled"
+            type="button"
+            (click)="move('next', formlyStepper)"
+          >
+            <mat-icon iconPositionEnd>{{ props.nextButton?.icon }}</mat-icon>
+            {{ props.nextButton.name }}
+          </button>
+        }
+
+        <!-- 
+          provide an <ng-template> that contains th action buttons
+          note that @ViewChild() is only available in ngAfterViewInit  
+           -->
+        <ng-container *ngIf="props.buttonsTemplate">
+          <ng-container
+            *ngTemplateOutlet="
+              props.buttonsTemplate;
+              context: {
+                stepper: formlyStepper,
+                step: step,
+                last: last,
+                field: field,
+                ctx: { comp: this },
+              }
+            "
+          ></ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
+
+@if (props.icon) {
+  <mat-icon matSuffix>{{ props.icon }}</mat-icon>
+}
+
+@if (props.description) {
+  <small [innerHTML]="props.description"></small>
+}

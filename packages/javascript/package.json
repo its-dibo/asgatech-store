@@ -1,0 +1,31 @@
+{
+  "name": "@engineers/javascript",
+  "version": "1.6.0",
+  "type": "module",
+  "private": false,
+  "description": "javascript utils",
+  "keywords": [
+    "javascript",
+    "js"
+  ],
+  "scripts": {
+    "build": "tsk build",
+    "prepublishOnly": "npm run build",
+    "prerelease": "shx mkdir -p dist && shx cp package.json dist",
+    "prerelease:local": "npm run prerelease",
+    "release": "semantic-release",
+    "release:local": "semantic-release --no-ci",
+    "postrelease": "shx rm -fr dist && shx rm -fr tarball!!",
+    "postrelease:local": "npm run postrelease",
+    "_publish": "cd dist && npm publish --access=public",
+    "pre_publish": "npm run prepublishOnly",
+    "_pack": "npm run prepublishOnly && npm pack --prefix=dist ./dist",
+    "postversion": "shx cp package.json .."
+  },
+  "dependencies": {
+    "lodash.template": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/lodash.template": "^4.5.3"
+  }
+}

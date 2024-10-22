@@ -1,0 +1,64 @@
+<mat-form-field
+  [appearance]="props.appearance"
+  [attr.style]="props.style"
+  [attr.class]="props.class"
+>
+  <mat-label>{{
+    props.label || field.key || ("Select a date" + props.range ? " range" : "")
+  }}</mat-label>
+
+  @if (props.range) {
+    <!-- @if() must contain a single element, so projection can work properly -->
+    <ng-container>
+      <!-- todo: add: min, max -->
+      <mat-date-range-input [rangePicker]="picker" [formGroup]="$any(form)">
+        <input
+          matStartDate
+          [formControl]="formControl"
+          [formlyAttributes]="field"
+          placeholder="Start date"
+          #dateRangeStart
+        />
+        <input
+          matEndDate
+          [formControl]="formControl"
+          [formlyAttributes]="field"
+          placeholder="End date"
+          #dateRangeEnd
+          (dateChange)="onChange([dateRangeStart.value, dateRangeEnd.value])"
+        />
+      </mat-date-range-input>
+      <!-- <mat-hint>{{props.description ||'MM/DD/YYYY – MM/DD/YYYY'}}</mat-hint> -->
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </ng-container>
+  } @else {
+    <ng-container>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [formControl]="formControl"
+        [formlyAttributes]="field"
+        [min]="props.minValue"
+        [max]="props.maxValue"
+        [style]="props.style"
+        [class]="props.class"
+        (dateChange)="onChange($event.value)"
+      />
+
+      <!-- <mat-hint>{{ props.description  }}</mat-hint> -->
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </ng-container>
+  }
+
+  @if (props.icon) {
+    <mat-icon matSuffix>{{ props.icon }}</mat-icon>
+  }
+
+  <mat-hint
+    [innerHTML]="
+      props.description || dateFormats.display?.dateInput || 'MM/DD/YYYY'
+    "
+  ></mat-hint>
+</mat-form-field>

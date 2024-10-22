@@ -1,0 +1,54 @@
+<mat-form-field
+  [appearance]="props.appearance"
+  [attr.style]="props.style"
+  [attr.class]="props.class"
+>
+  <mat-label>{{ props.label || field.key }}</mat-label>
+
+  <mat-chip-grid #chipGrid>
+    @for (item of items; track item) {
+      <mat-chip-row
+        (removed)="remove(item)"
+        [editable]="true"
+        (edited)="edit(item, $event)"
+        [aria-description]="'press enter to edit ' + item"
+      >
+        {{ item }}
+        <button matChipRemove [attr.aria-label]="'remove ' + item">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+    }
+  </mat-chip-grid>
+
+  <input
+    #input
+    matInput
+    [formControl]="formControl"
+    [formlyAttributes]="field"
+    [placeholder]="props.placeholder || 'add...'"
+    [matChipInputFor]="chipGrid"
+    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+    [matChipInputAddOnBlur]="addOnBlur"
+    (matChipInputTokenEnd)="add($event)"
+    [matAutocomplete]="auto"
+    [style]="props.style"
+    [class]="props.class"
+    (input)="onInput($event)"
+    (change)="onChange($event)"
+  />
+
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    @for (item of autoCompleteList; track item) {
+      <mat-option [value]="item.value">{{ item.label }}</mat-option>
+    }
+  </mat-autocomplete>
+
+  @if (props.icon) {
+    <mat-icon matSuffix>{{ props.icon }}</mat-icon>
+  }
+
+  @if (props.description) {
+    <mat-hint [innerHTML]="props.description"></mat-hint>
+  }
+</mat-form-field>

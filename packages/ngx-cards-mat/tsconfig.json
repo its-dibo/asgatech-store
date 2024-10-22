@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "allowJs": false,
+    "paths": {
+      "@engineers/*": ["../../packages/*"],
+      "~*": ["./*"],
+      "~~*": ["../../*"]
+    }
+  }
+}

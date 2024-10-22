@@ -1,0 +1,35 @@
+{
+  "name": "@engineers/nodejs",
+  "version": "1.1.0",
+  "type": "module",
+  "private": false,
+  "description": "nodejs utils",
+  "keywords": [
+    "nodejs",
+    "javascript",
+    "js"
+  ],
+  "dependencies": {
+    "content-type": "^1.0.5",
+    "strip-json-comments": "^5.0.1",
+    "@engineers/cache": "../cache",
+    "@engineers/javascript": "../javascript"
+  },
+  "devDependencies": {
+    "@types/content-type": "^1.1.8"
+  },
+  "scripts": {
+    "build": "tsk build",
+    "prepublishOnly": "npm run build",
+    "prerelease": "shx mkdir -p dist && shx cp package.json dist",
+    "prerelease:local": "npm run prerelease",
+    "release": "semantic-release",
+    "release:local": "semantic-release --no-ci",
+    "postrelease": "shx rm -fr dist && shx rm -fr tarball!!",
+    "postrelease:local": "npm run postrelease",
+    "_publish": "cd dist && npm publish --access=public",
+    "pre_publish": "npm run prepublishOnly",
+    "_pack": "npm run prepublishOnly && npm pack --prefix=dist ./dist",
+    "postversion": "shx cp package.json .."
+  }
+}

@@ -1,0 +1,36 @@
+<!-- 
+  todo: add other props and events
+  https://github.com/KillerCodeMonkey/ngx-quill/blob/master/projects/ngx-quill/config/src/quill-editor.interfaces.ts#L68 
+
+  todo: use <mat-form-field> see files.component.html
+  -->
+
+<label>{{ props.label }}</label>
+<quill-editor
+  [formControl]="formControl"
+  [formlyAttributes]="field"
+  [modules]="props.modules"
+  [customModules]="props.customModules || []"
+  [styles]="props.styles"
+  [placeholder]="props.placeholder || ''"
+  [bounds]="props.bounds"
+  [classes]="props.classes"
+  [compareValues]="props.compareValues"
+  [customModules]="props.customModules"
+  [customOptions]="props.customOptions || []"
+  [customToolbarPosition]="props.customToolbarPosition"
+  [debounceTime]="props.debounceTime"
+  [debug]="props.debug"
+  [defaultEmptyValue]="props.defaultEmptyValue"
+  [filterNull]="props.filterNull"
+  [format]="props.format"
+  [formats]="props.formats"
+  [trimOnValidation]="props.trimOnValidation"
+  [linkPlaceholder]="props.linkPlaceholder"
+  [style]="props.style"
+  [class]="props.class"
+></quill-editor>
+
+@if (props.description) {
+  <small [innerHTML]="props.description"></small>
+}
